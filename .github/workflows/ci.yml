@@ -1,0 +1,19 @@
+﻿name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: LGTM Security gate
+        uses: tarinagarwal/security-watchdog-action@v1
+        with:
+          api-token: ${{ secrets.LGTM_TOKEN }}
+          api-url: https://sunrise-principle-hoped-copyright.trycloudflare.com
+      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
+      - name: Build
+        run: echo "build ok on $GITHUB_SHA"
