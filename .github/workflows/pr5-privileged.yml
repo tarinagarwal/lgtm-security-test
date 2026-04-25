@@ -1,0 +1,10 @@
+﻿name: Privileged Container
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: alpine:latest
+      options: --privileged --cpus=2
+    steps:
+      - run: echo "running with --privileged"
