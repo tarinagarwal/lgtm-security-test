@@ -1,0 +1,24 @@
+﻿# Intentionally bad: pull_request_target + PR-head checkout.
+# This is the classic supply-chain RCE pattern — fork PR runs with this repo's secrets.
+# LGTM Security should flag it as a critical block-action finding and halt CI runs on this commit.
+name: Deploy on PR
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: LGTM Security gate
+        uses: tarinagarwal/security-watchdog-action@v1
+        with:
+          api-token: ${{ secrets.LGTM_TOKEN }}
+          api-url: https://sunrise-principle-hoped-copyright.trycloudflare.com
+      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Deploy
+        run: echo "deploying $GITHUB_SHA"
