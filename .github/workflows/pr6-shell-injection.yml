@@ -1,0 +1,8 @@
+﻿name: Shell Injection
+on:
+  pull_request:
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PR title was ${{ github.event.pull_request.title }}"
